@@ -28,3 +28,5 @@ To learn more about the Project, take a look at the following resources:
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [TailwindCSS Documentation](https://tailwindcss.com/docs) - learn about TailwindCSS features and API.
 - [Supabase Documentation](https://supabase.io/docs) - learn about Supabase features and API.
+
+## Deploy on Vercel
