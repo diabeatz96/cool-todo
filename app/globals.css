@@ -2,3 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  
+    .h1,
+    .h2 {
+      @apply leading-none;
+    }
+
+    .zigzag-container {
+      @apply relative;
+    }
+
+    .zigzag {
+      @apply absolute left-0 right-0 w-full h-36 pt-5 bg-white;
+      transform: skewY(-5deg);
+      transform-origin: top left;
+    }
+
+    .zigzag-footer {
+      @apply absolute left-0 right-0 w-full h-36 pt-5 bg-white;
+      transform: skewY(5deg);
+      transform-origin: bottom left;
+    }
+
+  }
