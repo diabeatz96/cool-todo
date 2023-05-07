@@ -3,11 +3,7 @@
 @tailwind utilities;
 
 @layer components {
-  
-    .h1,
-    .h2 {
-      @apply leading-none;
-    }
+
 
     .zigzag-container {
       @apply relative;
@@ -19,10 +15,22 @@
       transform-origin: top left;
     }
 
-    .zigzag-footer {
+    
+    .zigzag-bottom-right {
       @apply absolute left-0 right-0 w-full h-36 pt-5 bg-white;
       transform: skewY(5deg);
-      transform-origin: bottom left;
+      transform-origin: bottom right;
+    }
+
+    .sticky-footer {
+      @apply flex flex-col min-h-screen;
+            
+    }
+
+    .text-shadow {
+      @apply text-transparent bg-clip-text;
+      background-image: linear-gradient(to right, #4dc0b5, #4dc0b5 50%, #4dc0b5);
+      text-shadow: -2px 0 6px rgba(0, 0, 0);
     }
 
   }
