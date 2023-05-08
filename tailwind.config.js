@@ -37,6 +37,7 @@ module.exports = {
 			"100v": "100vh",
 		},
       backgroundImage: {
+        'register-bg2': "url('/register-bg2.svg')",
         'register-bg': "url('/register-bg.svg')",
         'cool-pattern': 'url("/bg.svg")',
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

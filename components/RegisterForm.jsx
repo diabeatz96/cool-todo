@@ -15,7 +15,7 @@ const RegisterForm = () => {
     return (
         
         <div className="h-90v flex items-center justify-center">
-            <section className = "card   bg-register-bg bg-cover w-96 shadow-xl text-slate-900">
+            <section className = "card bg-register-bg2 background-shadow bg-cover w-96 text-slate-900">
             <div className="card-body items-center ">
         <form className="form">
             <div className="form-control w-full max-w-xs">
