@@ -6,9 +6,5 @@ const NavButton = ({link, name}) => {
     )
 }
 
-NavButton.defaultProps = {
-    name: 'No Name Yet',
-    link: '/'
-}
 
 export default NavButton;
