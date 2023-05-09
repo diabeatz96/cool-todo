@@ -14,7 +14,6 @@
       transform: skewY(-5deg);
       transform-origin: top left;
     }
-
     
     .zigzag-bottom-right {
       @apply absolute left-0 right-0 w-full h-36 pt-5 bg-white;
@@ -33,4 +32,14 @@
       text-shadow: -2px 0 6px rgba(0, 0, 0);
     }
 
+    .black-shadow {
+      @apply bg-gradient-to-r from-gray-800 to-gray-900;
+      box-shadow: rgb(0 0 0 / 50%) -3px 10px 30px;
+    }
+
+    
+    .background-shadow {
+      @apply bg-gradient-to-r from-gray-100 to-gray-200;
+      box-shadow: rgb(255, 255, 255) -3px 10px 30px;
+    }
   }
