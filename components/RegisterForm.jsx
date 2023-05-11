@@ -40,14 +40,13 @@ const RegisterForm = () => {
     const [error, setError] = useState('')
 
     const [state, dispatch] = useReducer(reducer, initialState);
-    const { email, name, slug, password, response, loading } = state;
+    const { email, name, slug=name, password, response, loading } = state;
 
     const register = async (e) => {
-        debugger;
         dispatch({ type: "loading", loading: true });
         e.preventDefault();
 
-        const response = await registerUser(email, password, name, slug);
+        const response = await registerUser(name, email, password, slug);
         dispatch({ type: "response", response });
         dispatch({ type: "loading", loading: false });
         if(response?.success) {

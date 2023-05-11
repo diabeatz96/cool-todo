@@ -34,8 +34,8 @@ const registerUser = async (name, email, password, slug) => {
     if(authResponse.data.user) {
         const addMetaResponse = await supabase
         .from('users')
-        .insert([{ user_id: authResponse.data.user.id, name, slug }]);
-
+        .insert([{ email, name, slug }]);
+        console.log(authResponse.data.user)
         if(addMetaResponse.error) {
             return {
                 success: false,

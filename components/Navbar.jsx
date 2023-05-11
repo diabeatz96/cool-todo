@@ -6,7 +6,7 @@ const Navbar = () => {
     return (
         <nav className="navbar bg-accent flex gap-2 pt-10 zigzag">
             <NavButton link="/" name="Home" />
-            <NavButton link="/about" name="My Account" />
+            <NavButton link="/:name" name="My Account" />
             <NavButton link="/contact" name="User List" />
             <NavButton link="/login" name="Login" />
             <NavButton link="/register" name="Register" />
