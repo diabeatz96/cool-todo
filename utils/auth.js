@@ -55,4 +55,24 @@ const registerUser = async (name, email, password, slug) => {
     };
 }
 
+const loginUser = async (name, password) => {
+    const authResponse = await supabase.auth.signInWithPassword({
+        email,
+        password
+    })
+    if(authResponse.error) {
+        return {
+            success: false,
+            message: authResponse.error,
+        };
+    }
+
+    if(authResponse.data.user) {
+        const meta = await supabase
+        .from("profile")
+        .select("*")
+        .eq("name", name)
+    }
+}
+
 export {registerUser};
