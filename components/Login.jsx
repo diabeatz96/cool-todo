@@ -2,10 +2,11 @@
 
 import { loginUser } from "@/utils/auth";
 import { useRouter } from "next/navigation";
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 
 const Login = () => {
   const router = useRouter();
+
 
   function reducer(state, action) {
     switch (action.type) {
@@ -23,13 +24,13 @@ const Login = () => {
 
   const initialState = {
     email: "",
-    userPassword: "",
+    password: "",
     response: "",
     loading: false,
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { email, userPassword, response, loading } = state;
+  const { email, password, response, loading } = state;
 
   //   const [username, setUsername] = useState("");
   //   const [password, setPassword] = useState("");
@@ -37,11 +38,12 @@ const Login = () => {
   //   const [error, setError] = useState(false);
 
   const userLogin = async (e) => {
+    // debugger;
     dispatch({ type: "loading", value: true });
     dispatch({ type: "response", value: null });
     e.preventDefault();
 
-    const response = await loginUser(email, userPassword);
+    const response = await loginUser(email, password);
 
     dispatch({ type: "response", value: response });
     dispatch({ type: "loading", value: false });
@@ -74,18 +76,19 @@ const Login = () => {
         <h2 className="card-title text-white">Login</h2>
         <form className="form">
           <div className="form-control w-full max-w-xs">
-            <label htmlFor="username" className="label">
-              <span className="label-text text-white">Username</span>
+            <label htmlFor="email" className="label">
+              <span className="label-text text-white">Email</span>
             </label>
             <input
               onChange={(e) => {
                 dispatch({ type: e.target.name, value: e.target.value });
               }}
-              type="text"
-              placeholder="Username"
+              type="email"
+              placeholder="Email"
               name="email"
               className=" text-white input input-primary input-bordered w-full max-w-xs"
               value={email}
+              required
             />
           </div>
           <div className="form-control w-full max-w-xs">
@@ -100,7 +103,8 @@ const Login = () => {
               placeholder="Password"
               name="password"
               className=" text-white input input-primary input-bordered w-full max-w-xs"
-              password={userPassword}
+              password={password}
+              required
             />
           </div>
           <div className="card-actions justify-end pt-3">

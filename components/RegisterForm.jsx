@@ -89,6 +89,7 @@ const RegisterForm = () => {
                 name="name"
                 className=" text-white input input-primary input-bordered w-full max-w-xs"
                 value={name}
+                required
                 onChange={(e) => {
                   dispatch({ type: e.target.name, value: e.target.value });
                 }}
@@ -106,11 +107,11 @@ const RegisterForm = () => {
                 name="password"
                 className=" text-white input input-primary input-bordered w-full max-w-xs"
                 value={password}
+                required
                 onChange={(e) => {
                   dispatch({ type: e.target.name, value: e.target.value });
                 }}
               />
-              {console.log(password.length)}
             </div>
             {/* <div className="form-control w-full max-w-xs">
                 <label htmlFor="password" className="label">

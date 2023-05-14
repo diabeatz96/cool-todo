@@ -17,11 +17,11 @@ const registerUser = async (name, email, password, slug) => {
       message: "Slug already exists",
     };
   }
-
   const authResponse = await supabase.auth.signUp({
     email,
     password,
   });
+
 
   if (authResponse.error) {
     return {
@@ -33,8 +33,7 @@ const registerUser = async (name, email, password, slug) => {
   if (authResponse.data.user) {
     const addMetaResponse = await supabase
       .from("users")
-      .insert([{ email, name, slug }]);
-    console.log(authResponse.data.user);
+      .insert([{ user_id: authResponse.data.user.id, name, slug }]);
     if (addMetaResponse.error) {
       return {
         success: false,
@@ -55,10 +54,12 @@ const registerUser = async (name, email, password, slug) => {
 };
 
 const loginUser = async (email, password) => {
+  debugger;
   const authResponse = await supabase.auth.signInWithPassword({
     email,
     password,
   });
+  console.log(authResponse);
   if (authResponse.error) {
     return {
       success: false,
@@ -67,7 +68,7 @@ const loginUser = async (email, password) => {
   }
 
   if (authResponse.data.user) {
-    const meta = await supabase.from("profile").select("*").eq("email", email);
+    const meta = await supabase.from("profile").select("*").eq("user_id", authResponse.data.user.id);
 
     if (meta.error) {
       return {
