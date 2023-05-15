@@ -1,5 +1,45 @@
 import supabase from "./supabase";
 
+const getCurrentUser = async () => {
+  const session = await supabase.auth.getSession();
+  if(session?.data?.session?.user) {
+    const { data: bargeMeta, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("user_id", session.data.session.user.id)
+    .single();
+
+    const todoList = await getTodoList(session.data.session.user.id);
+
+    const user = {
+      ...session.data.session.user,
+      bargeMeta,
+      todoList
+    };
+
+    return {
+      data: user,
+      error
+    }
+  }
+  return null;
+};
+
+getTodoList = async(userId) => {
+  const { data, error } = await supabase
+  .from("links")
+  .select("*")
+  .eq("user_id", userId);
+  if(error) {
+    return {
+      success: false,
+      error,
+    }
+  }
+
+  return data;
+}
+
 const registerUser = async (name, email, password, slug) => {
   const { data, error } = await supabase
     .from("users")
@@ -54,7 +94,7 @@ const registerUser = async (name, email, password, slug) => {
 };
 
 const loginUser = async (email, password) => {
-  debugger;
+  // debugger;
   const authResponse = await supabase.auth.signInWithPassword({
     email,
     password,
@@ -68,7 +108,7 @@ const loginUser = async (email, password) => {
   }
 
   if (authResponse.data.user) {
-    const meta = await supabase.from("profile").select("*").eq("user_id", authResponse.data.user.id);
+    const meta = await supabase.from("users").select("*").eq("user_id", authResponse.data.user.id);
 
     if (meta.error) {
       return {
@@ -89,4 +129,4 @@ const loginUser = async (email, password) => {
   };
 };
 
-export { registerUser, loginUser };
+export { registerUser, loginUser, getCurrentUser };
