@@ -1,6 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import useUser from "@/hooks/useUser";
+import useUserMustBeLogged from "@/hooks/userIsLoggedIn";
+import { addNewList } from "@/utils/auth";
+import { useEffect, useState } from "react";
 const CreateTodoList = () => {
 
     const [title, setTitle] = useState("");
@@ -9,6 +12,14 @@ const CreateTodoList = () => {
     const [todoList, setTodoList] = useState([]);
     const [todo, setTodo] = useState("");
     const [checkbox, setCheckbox] = useState(false);
+
+    const { user, refreshUser, error, loading } = useUser();
+
+    useUserMustBeLogged(user, "in", "/login");
+
+    // useEffect(() => {
+    //     setTodoList(tempCurrentList);        
+    // }, [user])
 
     function todoAmountHandler() {
         setTodoAmount(todoAmount + 1);
@@ -37,6 +48,19 @@ const CreateTodoList = () => {
         }
     );
     }
+
+    const addList = async (e) => {
+        e.preventDefault();
+        const addedList = await addNewList(title, description, user.id);
+        console.log(user.todoList);
+        if(addedList.success === false) {
+            return;
+        }
+        setTitle("");
+        setDescription("");
+        refreshUser();
+        console.log("success?");
+        }
 
     return (
         <section className = "card w-96 bg-success shadow-xl text-slate-900">
@@ -81,7 +105,7 @@ const CreateTodoList = () => {
                         </div>
 
                         <div onClick={todoListHandler} className="btn btn-info border-none hover:bg-accent hover:text-black">Add Todo</div>
-                        <button type="submit" className="btn btn-primary border-none hover:bg-accent hover:text-black">Create Todo List</button>
+                        <button type="submit" onClick={addList} className="btn btn-primary border-none hover:bg-accent hover:text-black">Create Todo List</button>
 
                         </div>
                         
