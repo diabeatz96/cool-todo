@@ -13,8 +13,6 @@ const UserPage = () => {
     const [list, setList] = useState([]);
 
     const { user } = useUser();
-
-    useUserMustBeLogged(user, "in", "/login");
     
     return (
         <div className="mt-[100px]">

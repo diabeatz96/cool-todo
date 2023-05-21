@@ -1,5 +1,6 @@
 "use client";
 
+import useUserMustBeLogged from "@/hooks/userIsLoggedIn";
 import { loginUser } from "@/utils/auth";
 import { useRouter } from "next/navigation";
 import React, { useReducer } from "react";
@@ -49,7 +50,7 @@ const Login = () => {
     dispatch({ type: "loading", value: false });
     if (response?.success) {
       setTimeout(() => {
-        router.replace("/user");
+        router.push("/");
       }, 3000);
     }
   };

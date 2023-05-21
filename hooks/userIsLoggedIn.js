@@ -8,6 +8,7 @@ const useUserMustBeLogged = (user, what = "in", url = "/") => {
 
     useEffect(() => {
         if(user === undefined) {
+            console.log("user is undefined");
             return;
         }
         if((what === "in" && !user) || (what === "out" && user)) {
