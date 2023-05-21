@@ -1,7 +1,9 @@
 import supabase from "./supabase";
 
 const getCurrentUser = async () => {
+  // debugger;
   const session = await supabase.auth.getSession();
+  // console.log(session);
   if(session?.data?.session?.user) {
     const { data: bargeMeta, error } = await supabase
     .from("users")
@@ -9,7 +11,14 @@ const getCurrentUser = async () => {
     .eq("user_id", session.data.session.user.id)
     .single();
 
-    const todoList = await getTodoList(session.data.session.user.id);
+    if(error) {
+      return {
+        success: false,
+        error,
+      }
+    }
+
+    const todoList = await getLists(session.data.session.user.id);
 
     const user = {
       ...session.data.session.user,
@@ -17,19 +26,56 @@ const getCurrentUser = async () => {
       todoList
     };
 
-    return {
-      data: user,
-      error
-    }
-  }
-  return null;
-};
+    // console.log(user.bargeMeta.slug);
 
-getTodoList = async(userId) => {
+    return {
+      success: true,
+      data: user,
+    };
+  }
+    return {
+      success: true,
+      data: null,
+    }
+}
+
+const getUserBySlug = async (slug) => {
+  debugger;
   const { data, error } = await supabase
-  .from("links")
+    .from("users")
+    .select("*")
+    .eq("slug", slug)
+    .limit(1)
+    .single();
+    if(error) {
+      return {
+        success: false,
+        error,
+      }
+    }
+
+    console.log({data});
+
+    return {
+      success: true,
+      data
+    }
+}
+
+const listRequestData = {
+  data: null,
+}
+
+const getLists = async(owner) => {
+  debugger;
+  if(listRequestData.data) {
+    return listRequestData.data;
+  }
+
+  const { data, error } = await supabase
+  .from("lists")
   .select("*")
-  .eq("user_id", userId);
+  .eq("owner", owner);
   if(error) {
     return {
       success: false,
@@ -37,7 +83,31 @@ getTodoList = async(userId) => {
     }
   }
 
-  return data;
+  listRequestData.data = { success: true, data};
+
+  return { success: true, data };
+}
+
+const addNewList = async(title, description, owner) => {
+  // listRequestData.data = null;
+  const addResponse = await supabase.from("lists").insert({
+    title,
+    description,
+    owner,
+  });
+
+  if(addResponse.error) {
+    return {
+      success: false,
+      error: addResponse.error,
+    };
+  }
+
+  return {
+    success: true,
+    message: "added successfully",
+    data: addResponse.data,
+  }
 }
 
 const registerUser = async (name, email, password, slug) => {
@@ -129,4 +199,9 @@ const loginUser = async (email, password) => {
   };
 };
 
-export { registerUser, loginUser, getCurrentUser };
+const logoutUser = async () => {
+  const { error } = await supabase.auth.signOut();
+  return {success: !error, error };
+}
+
+export { registerUser, loginUser, getCurrentUser, getLists, addNewList, logoutUser, getUserBySlug };

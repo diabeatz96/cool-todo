@@ -1,42 +1,63 @@
 import { getCurrentUser } from "@/utils/auth";
-import { supabase } from "@supabase/auth-ui-shared";
-import { useEffect, useState } from"react";
+import { useEffect, useState, useRef } from "react";
+import supabase from "utils/supabase.js";
 
 const useUser = () => {
-    const [user, setUser] = useState(0);
-    const [error, setError] = useState(0);
-    const [fullyLoaded, setFullyLoaded] = useState(false);
+    const isMounted = useRef(false);
 
-    const getUser = async () => {
-        setError(0);
-        setUser(0);
-        setFullyLoaded(false);
+    const [user, setUser] = useState(undefined);    
+    const [error, setError] = useState(undefined);
+
+    const refreshUser = async () => {
+        setError(undefined);
+        setUser(undefined);
+        getUser();
+    }
+
+        const getUser = async () => {
 
         const currentUser = await getCurrentUser();
 
-        setFullyLoaded(true);
-        if(!currentUser) {
+        if(!currentUser.success) {
+            setError(currentUser.error);
+            return;
+        }
+
+        if(!currentUser.data) {
             setUser(null);
             return;
         }
-        setUser(currentUser.data);
-    }
 
-    supabase.auth.onAuthStateChange((event, session) => {
+        setUser(currentUser.data);
+    };
+
+    useEffect(() => {
+        if(!isMounted.current) {
+        console.log(supabase);
+        const { subscription } = supabase.auth.onAuthStateChange(
+            authStateChangeListener
+        );
+        getUser();
+        isMounted.current = true;
+        return () => {
+            subscription?.unsubscribe();
+            }
+        }
+    }, []);
+
+    const authStateChangeListener = ((event, session) => {
         if(["SIGNED_IN", "SIGNED_OUT"].includes(event)) {
             getUser();
         }
     })
 
-    useEffect(() => {
-        getUser();
-    }, []);
+    
 
     return {
         user,
         error,
-        fullyLoaded,
-        refreshUser: getUser,
+        refreshUser,
+        loading: user === undefined,
     };
 };
 
