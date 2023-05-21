@@ -51,7 +51,10 @@ const CreateTodoList = () => {
 
     const addList = async (e) => {
         e.preventDefault();
-        const addedList = await addNewList(title, description, user.id);
+        const jsonList = JSON.stringify(todoList);
+        const jsonListObj = JSON.parse(jsonList);
+
+        const addedList = await addNewList(title, description, user.id, jsonListObj);
         console.log(user.todoList);
         if(addedList.success === false) {
             return;

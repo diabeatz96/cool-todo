@@ -40,7 +40,7 @@ const getCurrentUser = async () => {
 }
 
 const getUserBySlug = async (slug) => {
-  debugger;
+  //debugger;
   const { data, error } = await supabase
     .from("users")
     .select("*")
@@ -54,8 +54,6 @@ const getUserBySlug = async (slug) => {
       }
     }
 
-    console.log({data});
-
     return {
       success: true,
       data
@@ -67,7 +65,7 @@ const listRequestData = {
 }
 
 const getLists = async(owner) => {
-  debugger;
+  //debugger;
   if(listRequestData.data) {
     return listRequestData.data;
   }
@@ -88,12 +86,13 @@ const getLists = async(owner) => {
   return { success: true, data };
 }
 
-const addNewList = async(title, description, owner) => {
+const addNewList = async(title, description, owner, list) => {
   // listRequestData.data = null;
   const addResponse = await supabase.from("lists").insert({
     title,
     description,
     owner,
+    list,
   });
 
   if(addResponse.error) {
