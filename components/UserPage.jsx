@@ -18,6 +18,8 @@ const UserPage = () => {
     console.log(user);
     useUserMustBeLogged(user, "in", "/login");
 
+    
+
     useEffect(() => {
         if(!user) {
             return;

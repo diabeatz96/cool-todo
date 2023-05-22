@@ -41,7 +41,7 @@ const Navbar = () => {
   return (
     <nav className="navbar bg-accent flex gap-2 pt-10 zigzag">
       <NavButton link="/" name="Home" />
-      <NavButton link="/user" name="My Account" />
+      <NavButton link="/create" name="Create List" />
       {!isLoggedIn && (
           <>
             <NavButton link="/login" name="Login" />

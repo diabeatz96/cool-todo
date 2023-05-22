@@ -15,8 +15,6 @@ const TodoList = ({
   onPage = false,
 }) => {
   
-  
-
   return (
     <section className="card card-bordered border-white border-8 w-96 bg-success shadow-xl text-slate-900">
       <div className="card-body">
@@ -52,7 +50,7 @@ const TodoList = ({
         <div className="card-actions text-sm">
           <p className=" badge badge-primary">Created: {created}</p>
           <p className=" badge badge-secondary">Updated: {updated}</p>
-          <p className=" badge badge-accent">Posted by: {username} </p>
+          <p className=" badge badge-accent h-fit ">Posted by: {username} </p>
         </div>
       </div>
     </section>
