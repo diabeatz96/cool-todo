@@ -66,7 +66,7 @@ const CreateTodoList = () => {
         }
 
     return (
-        <section className = "card w-96 bg-success shadow-xl text-slate-900">
+        <section className = "card w-96 bg-success shadow-xl text-slate-900 mt-[150px]">
                 
             <div className="card-body">
             <h2 className="card-title">Create a todo-list</h2>

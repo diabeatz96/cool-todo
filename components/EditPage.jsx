@@ -4,7 +4,7 @@ import useUser from "@/hooks/useUser";
 import useUserMustBeLogged from "@/hooks/userIsLoggedIn";
 import { getLists, updateList } from "@/utils/auth";
 import { useEffect, useState } from "react";
-import { redirect, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 
 const EditTodoList = () => {
