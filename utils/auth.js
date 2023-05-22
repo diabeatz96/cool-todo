@@ -4,18 +4,18 @@ const getCurrentUser = async () => {
   // debugger;
   const session = await supabase.auth.getSession();
   // console.log(session);
-  if(session?.data?.session?.user) {
+  if (session?.data?.session?.user) {
     const { data: bargeMeta, error } = await supabase
-    .from("users")
-    .select("*")
-    .eq("user_id", session.data.session.user.id)
-    .single();
+      .from("users")
+      .select("*")
+      .eq("user_id", session.data.session.user.id)
+      .single();
 
-    if(error) {
+    if (error) {
       return {
         success: false,
         error,
-      }
+      };
     }
 
     const todoList = await getLists(session.data.session.user.id);
@@ -23,7 +23,7 @@ const getCurrentUser = async () => {
     const user = {
       ...session.data.session.user,
       bargeMeta,
-      todoList
+      todoList,
     };
 
     // console.log(user.bargeMeta.slug);
@@ -33,11 +33,11 @@ const getCurrentUser = async () => {
       data: user,
     };
   }
-    return {
-      success: true,
-      data: null,
-    }
-}
+  return {
+    success: true,
+    data: null,
+  };
+};
 
 const getUserBySlug = async (slug) => {
   //debugger;
@@ -47,46 +47,90 @@ const getUserBySlug = async (slug) => {
     .eq("slug", slug)
     .limit(1)
     .single();
-    if(error) {
-      return {
-        success: false,
-        error,
-      }
-    }
-
+  if (error) {
     return {
-      success: true,
-      data
-    }
-}
+      success: false,
+      error,
+    };
+  }
+
+  return {
+    success: true,
+    data,
+  };
+};
 
 const listRequestData = {
   data: null,
-}
+};
 
-const getLists = async(owner) => {
+const getLists = async (owner) => {
   //debugger;
-  if(listRequestData.data) {
+  if (listRequestData.data) {
     return listRequestData.data;
   }
 
   const { data, error } = await supabase
-  .from("lists")
-  .select("*")
-  .eq("owner", owner);
-  if(error) {
+    .from("lists")
+    .select("*")
+    .eq("owner", owner);
+  if (error) {
     return {
       success: false,
       error,
-    }
+    };
   }
 
-  listRequestData.data = { success: true, data};
+  listRequestData.data = { success: true, data };
 
   return { success: true, data };
-}
+};
 
-const addNewList = async(title, description, owner, list) => {
+const editList = async (title, description, list, listId) => {
+  const updateResponse = await supabase
+    .from("lists")
+    .update({
+      title,
+      description,
+      list,
+    })
+    .eq("id", listId);
+
+  if (updateResponse.error) {
+    return {
+      success: false,
+      error: updateResponse.error,
+    };
+  }
+
+  return {
+    success: true,
+    message: "updated successfully",
+    data: updateResponse.data,
+  };
+};
+
+const deleteList = async (listId) => {
+  const deleteResponse = await supabase
+    .from("lists")
+    .delete("*")
+    .eq("id", listId);
+
+  if (deleteResponse.error) {
+    return {
+      success: false,
+      error: deleteResponse.error,
+    };
+  }
+
+  return {
+    success: true,
+    message: "deleted successfully",
+    data: deleteResponse.data,
+  };
+};
+
+const addNewList = async (title, description, owner, list) => {
   // listRequestData.data = null;
   const addResponse = await supabase.from("lists").insert({
     title,
@@ -95,7 +139,7 @@ const addNewList = async(title, description, owner, list) => {
     list,
   });
 
-  if(addResponse.error) {
+  if (addResponse.error) {
     return {
       success: false,
       error: addResponse.error,
@@ -106,8 +150,8 @@ const addNewList = async(title, description, owner, list) => {
     success: true,
     message: "added successfully",
     data: addResponse.data,
-  }
-}
+  };
+};
 
 const registerUser = async (name, email, password, slug) => {
   const { data, error } = await supabase
@@ -130,7 +174,6 @@ const registerUser = async (name, email, password, slug) => {
     email,
     password,
   });
-
 
   if (authResponse.error) {
     return {
@@ -168,16 +211,19 @@ const loginUser = async (email, password) => {
     email,
     password,
   });
-  console.log(authResponse);
+  // console.log(authResponse);
   if (authResponse.error) {
     return {
       success: false,
-      message: authResponse.error,
+      error: authResponse.error,
     };
   }
 
   if (authResponse.data.user) {
-    const meta = await supabase.from("users").select("*").eq("user_id", authResponse.data.user.id);
+    const meta = await supabase
+      .from("users")
+      .select("*")
+      .eq("user_id", authResponse.data.user.id);
 
     if (meta.error) {
       return {
@@ -194,13 +240,25 @@ const loginUser = async (email, password) => {
   }
   return {
     success: false,
-    message: "An unknown error has occurred",
+    error: {
+      message: "An unknown error has occurred",
+    },
   };
 };
 
 const logoutUser = async () => {
   const { error } = await supabase.auth.signOut();
-  return {success: !error, error };
-}
+  return { success: !error, error };
+};
 
-export { registerUser, loginUser, getCurrentUser, getLists, addNewList, logoutUser, getUserBySlug };
+export {
+  registerUser,
+  loginUser,
+  getCurrentUser,
+  getLists,
+  addNewList,
+  logoutUser,
+  getUserBySlug,
+  editList,
+  deleteList,
+};
