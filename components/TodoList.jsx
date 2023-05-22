@@ -2,10 +2,13 @@
 import useUser from "@/hooks/useUser";
 import useUserMustBeLogged from "@/hooks/userIsLoggedIn";
 import { deleteList } from "@/utils/auth";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 const TodoList = ({
+  id = 0,
   username = "Anonymous",
   title = "Todo List",
   description = "A list of todos",
@@ -14,23 +17,15 @@ const TodoList = ({
   updated = new Date().toLocaleDateString(),
   onPage = false,
 }) => {
-  const { user, refreshUser } = useUser();
-
-  // useEffect(() => {
-  //   refreshUser();
-  // });
-  // useUserMustBeLogged(user, "in", "/login");
-  // console.log(user.todoList.data);
-  const removeList = async (e) => {
-    e.preventDefault();
-    // refreshUser();
-    const removedList = await deleteList(user.todoList.data.id);
-    console.log(user.todoList.data);
-    if (user.todoList.data[listId].id === listId) {
-      todos.pop(user.todoList.data[listId]);
-    }
-    if (removedList.success === false) {
-      console.log("didnt work!!");
+  const removeList = async () => {
+    if (confirm("are you sure you want to delete?") === true) {
+      const removedList = await deleteList(id);
+      if (removedList.success === false) {
+        console.log("didnt work!!");
+        return;
+      }
+      location.reload();
+    } else {
       return;
     }
   };

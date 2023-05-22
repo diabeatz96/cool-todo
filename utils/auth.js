@@ -86,30 +86,6 @@ const getLists = async (owner) => {
   return { success: true, data };
 };
 
-const editList = async (title, description, list, listId) => {
-  const updateResponse = await supabase
-    .from("lists")
-    .update({
-      title,
-      description,
-      list,
-    })
-    .eq("id", listId);
-
-  if (updateResponse.error) {
-    return {
-      success: false,
-      error: updateResponse.error,
-    };
-  }
-
-  return {
-    success: true,
-    message: "updated successfully",
-    data: updateResponse.data,
-  };
-};
-
 const deleteList = async (listId) => {
   const deleteResponse = await supabase
     .from("lists")

@@ -11,6 +11,7 @@ const CreateTodoList = () => {
   const [todoList, setTodoList] = useState([]);
   const [todo, setTodo] = useState("");
   const [checkbox, setCheckbox] = useState(false);
+  const [valid, setValid] = useState();
 
   const { user, refreshUser, error, loading } = useUser();
 
@@ -52,6 +53,11 @@ const CreateTodoList = () => {
     const jsonList = JSON.stringify(todoList);
     const jsonListObj = JSON.parse(jsonList);
 
+    if (!title) {
+      setValid(false);
+      return;
+    }
+
     const addedList = await addNewList(
       title,
       description,
@@ -61,13 +67,23 @@ const CreateTodoList = () => {
     if (addedList.success === false) {
       return;
     }
+    setValid(true);
     setTitle("");
     setDescription("");
+    setTodoList([]);
     refreshUser();
+    setTimeout(() => {
+      location.reload();
+    }, 2000);
   };
 
   return (
     <section className="card w-96 bg-success shadow-xl text-slate-900">
+      {valid === true && (
+        <div className="bg-green-200 broder-2 border-green-800 text-green-800 py-2 px-5 my-10 text-center">
+          <span className="font-bold">"Successfully Created List"</span>
+        </div>
+      )}
       <div className="card-body">
         <h2 className="card-title">Create a todo-list</h2>
         <form className="form">
@@ -84,6 +100,11 @@ const CreateTodoList = () => {
               name="title"
               className=" text-white input input-primary input-bordered w-full max-w-xs"
             />
+            {valid === false && (
+              <span className="label-text text-red-500">
+                Add a title for this todo
+              </span>
+            )}
           </div>
           <label htmlFor="description" className="label">
             <span className="label-text text-black">
