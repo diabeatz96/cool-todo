@@ -25,7 +25,7 @@ const Navbar = () => {
       setIsLoggedIn(false);
     }
     console.log(router);
-  }, [refreshUser, user, userData, router]);
+  }, [router]);
 
   // getUserBySlug(user.name);
   // const { data, error, success } = await getUserBySlug(slug);
