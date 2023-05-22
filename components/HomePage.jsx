@@ -34,7 +34,13 @@ const HomePage = () => {
   }, [user]);
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-[75px]">
+      {!isLoggedIn && (
+        <>
+          <h1 className="text-8xl text-center text-warning text-shadow col-span-2 md:col-span-5"> Welcome to Cool Todo!! </h1>
+          <h1 className="text-8xl text-center text-warning text-shadow col-span-2 md:col-span-5"> Please log in to view user lists! </h1>
+          </>
+        )}
       {lists.map((list) => (
         <TodoList key = {list.id} id = {list.id} title = {list.title} created = {list.created} updated = {list.updated} description= {list.description} username = {list.owner}   />
       ))}

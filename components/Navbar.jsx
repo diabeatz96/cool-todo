@@ -25,7 +25,7 @@ const Navbar = () => {
       setIsLoggedIn(false);
     }
     console.log(router);
-  }, [router]);
+  }, [refreshUser, user, userData, router]);
 
   // getUserBySlug(user.name);
   // const { data, error, success } = await getUserBySlug(slug);
@@ -51,7 +51,10 @@ const Navbar = () => {
       {isLoggedIn &&
             <>
               <NavButton link="/logout" name="Logout" />  
-              <NavButton link={`/user/${userData.bargeMeta.name}`} name="My List" />
+
+              {userData && userData.bargeMeta && userData.bargeMeta.name &&
+               <NavButton link={`/user/${userData.bargeMeta.name}`} name="My List" />
+              }
             </>
       }
     </nav>
