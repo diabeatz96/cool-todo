@@ -18,13 +18,14 @@ const UserPage = () => {
 
   // console.log(user);
   useUserMustBeLogged(user, "in", "/login");
+  console.log(user);
 
   useEffect(() => {
     if (!user) {
       return;
     }
     (async () => {
-      const { data: lists } = await getLists(user.user_id);
+      const { data: lists } = await getLists(user.id);
       if (!lists) {
         notFound();
       }

@@ -207,22 +207,6 @@ const registerUser = async (name, email, password, slug) => {
   };
 };
 
-const deleteList = async (id) => {
-  const deleteResponse = await supabase.from("lists").delete().eq("id", id);
-  if(deleteResponse.error) {
-    return {
-      success: false,
-      error: deleteResponse.error,
-    };
-  }
-
-  return {
-    success: true,
-    message: "deleted successfully",
-    data: deleteResponse.data,
-  }
-}
-
 const getTenListsAllUsers = async () => {
   const { data, error } = await supabase
   .from("lists")

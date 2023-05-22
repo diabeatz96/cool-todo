@@ -50,12 +50,13 @@ const Login = () => {
     if (response?.success) {
       setTimeout(() => {
         router.push("/");
+        location.reload();
       }, 3000);
     }
   };
 
   return (
-    <section className="card w-96 bg-.login-bg bg-cover bg-no-repeat shadow-xl text-slate-900">
+    <section className="mt-[150px] card w-96 bg-.login-bg bg-cover bg-no-repeat shadow-xl text-slate-900">
       {response && (
         <div
           className={`${

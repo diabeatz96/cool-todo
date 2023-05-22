@@ -19,6 +19,7 @@ const EditTodoList = () => {
     const [listId, setListId] = useState(null);
     const [filteredLists, setFilteredLists] = useState([]);
     const { user, refreshUser, error, loading } = useUser();
+    const [valid, setValid] = useState();
 
     const [pathname, setPathname] = useState(usePathname().split("/")[4]);
 
@@ -72,20 +73,33 @@ const EditTodoList = () => {
         e.preventDefault;
         const jsonList = JSON.stringify(todoList);
         const jsonListObj = JSON.parse(jsonList);
+        
+        if (!title) {
+            setValid(false);
+            return;
+          }
 
         const newList = await updateList(listId, title, description, user.id, jsonListObj);
 
         if(newList.success === false) {
             return;
         }
+        setValid(true);
         setTitle("");
         setDescription("");
+        refreshUser();
+        setTimeout(() => {
         router.push(`/user/${user.username}`);
-        }
+        }, 2000);
+    }
 
     return (
         <section className = "card w-96 bg-success shadow-xl text-slate-90 mt-[150px]">
-                
+                {valid === true && (
+        <div className="bg-green-200 broder-2 border-green-800 text-green-800 py-2 px-5 my-10 text-center">
+          <span className="font-bold">Successfully Upated List</span>
+        </div>
+            )}
             <div className="card-body">
             <h2 className="card-title text-shadow text-primary">Edit a todo-list</h2>
                 <form className="form">
@@ -94,6 +108,11 @@ const EditTodoList = () => {
                             <span className="label-text text-black">What is title of your todo?</span>
                         </label>
                     <input onChange={onChangeTitleHandler} type="text" placeholder={filteredLists.length > 0 ?  filteredLists[0].title : "Loading"} name="title" className=" text-white input input-primary input-bordered w-full max-w-xs" />
+                    {valid === false && (
+                    <span className="label-text text-red-500">
+                    Add a title for this todo
+                    </span>
+                     )}
                     </div>
                     <label htmlFor="description" className="label">
                             <span className="label-text text-black">What is the description?</span>

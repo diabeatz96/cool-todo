@@ -78,10 +78,10 @@ const CreateTodoList = () => {
   };
 
     return (
-        <section className = "card w-96 bg-success shadow-xl text-slate-900">
+        <section className = "mt-[200px] card w-96 bg-success shadow-xl text-slate-900">
         {valid === true && (
         <div className="bg-green-200 broder-2 border-green-800 text-green-800 py-2 px-5 my-10 text-center">
-          <span className="font-bold">"Successfully Created List"</span>
+          <span className="font-bold">Successfully Created List</span>
         </div>
             )}
             <div className="card-body">
