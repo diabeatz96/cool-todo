@@ -12,6 +12,7 @@ const TodoList = ({
   todos = [],
   created = new Date().toLocaleDateString(),
   updated = new Date().toLocaleDateString(),
+  onPage = false,
 }) => {
   const { user, refreshUser } = useUser();
 
@@ -42,7 +43,9 @@ const TodoList = ({
             {title}
           </h2>
           <button className="btn btn-sm btn-primary mr-2">
-            <FaEdit />
+            <Link href={`/user/${username}/list/${id}/edit`}>
+              <FaEdit />
+            </Link>
           </button>
           <button className="btn btn-sm btn-danger">
             <FaTrash onClick={removeList} />

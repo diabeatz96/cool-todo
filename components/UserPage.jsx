@@ -13,8 +13,7 @@ import { usePathname } from "next/navigation";
 const UserPage = () => {
   const { user } = useUser();
   const [lists, setLists] = useState([]);
-  const [user_id, setUser_id] = useState(null);
-  const username = usePathname();
+  const username = usePathname().split("/")[2];
 
   // console.log(user);
   useUserMustBeLogged(user, "in", "/login");
@@ -35,13 +34,16 @@ const UserPage = () => {
   return (
     <div className="h-screen mt-[150px] overflow-auto">
       <div className="">
-        <h1 className="text-8xl text-center">User Page</h1>
+        <h1 className="text-8xl text-center text-shadow text-secondary">
+          User Page
+        </h1>
       </div>
       <div>
         <ul className="w-full grid grid-cols-3 gap-4 p-4 ">
           {lists.map((list) => (
             <li key={list.id} className="py-3">
               <TodoList
+                id={list.id}
                 created={list.created}
                 updated={list.created}
                 username={username}
