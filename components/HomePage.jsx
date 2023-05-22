@@ -35,7 +35,8 @@ const HomePage = () => {
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-[75px]">
-      {!isLoggedIn && (
+        
+      {!isLoggedIn && !userData && lists.length === 0 && (
         <>
           <h1 className="text-8xl text-center text-warning text-shadow col-span-2 md:col-span-5"> Welcome to Cool Todo!! </h1>
           <h1 className="text-8xl text-center text-warning text-shadow col-span-2 md:col-span-5"> Please log in to view user lists! </h1>
