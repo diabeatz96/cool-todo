@@ -109,6 +109,31 @@ const addNewList = async(title, description, owner, list) => {
   }
 }
 
+const updateList = async(id, title, description, owner, list) => {
+  // listRequestData.data = null;
+  const updateResponse = await supabase.from("lists").update({
+    title,
+    description,
+    owner,
+    list,
+  }).eq("id", id);
+
+  if(updateResponse.error) {
+    return {
+      success: false,
+      error: updateResponse.error,
+    };
+  }
+
+  return {
+    success: true,
+    message: "updated successfully",
+    data: updateResponse.data,
+  } 
+
+}
+
+
 const registerUser = async (name, email, password, slug) => {
   const { data, error } = await supabase
     .from("users")
@@ -203,4 +228,4 @@ const logoutUser = async () => {
   return {success: !error, error };
 }
 
-export { registerUser, loginUser, getCurrentUser, getLists, addNewList, logoutUser, getUserBySlug };
+export { updateList, registerUser, loginUser, getCurrentUser, getLists, addNewList, logoutUser, getUserBySlug };

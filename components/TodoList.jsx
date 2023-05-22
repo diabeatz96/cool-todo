@@ -1,23 +1,31 @@
 "use client"
 import { useState } from 'react'
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 const TodoList = ({
+  id = 0,
   username = 'Anonymous',
   title = 'Todo List',
   description = 'A list of todos',
   todos = [],
   created = new Date().toLocaleDateString(),
   updated = new Date().toLocaleDateString(),
+  onPage = false,
 }) => {
   
+  
+
   return (
     <section className="card card-bordered border-white border-8 w-96 bg-success shadow-xl text-slate-900">
       <div className="card-body">
         <div className="flex justify-end">
         <h2 className=" justify-self-start flex-1 flex-grow card-title">{title}</h2>
           <button className="btn btn-sm btn-primary mr-2">
+            <Link href = {`/user/${username}/list/${id}/edit`}>
             <FaEdit />
+            </Link>
           </button>
           <button className="btn btn-sm btn-danger">
             <FaTrash />

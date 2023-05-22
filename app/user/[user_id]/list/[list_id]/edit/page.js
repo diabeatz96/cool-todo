@@ -1,10 +1,8 @@
-
+import EditTodoList from "@/components/EditPage";
 
 const EditListPage = () => {
     return (
-        <div>
-        <h1>Edit List Page</h1>
-        </div>
+        <EditTodoList/>
     );
 }
 

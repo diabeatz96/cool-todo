@@ -1,13 +1,8 @@
-import { getLists } from "@/utils/auth";
+import ViewUserListPage from "@/components/ViewUserListPage";
 
 const ListIdPage = async () => {
-
-
-
     return (
-        <div>
-        <h1>List Id page</h1>
-        </div>
+        <ViewUserListPage />
     );
 }
 
