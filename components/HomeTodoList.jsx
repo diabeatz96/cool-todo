@@ -34,14 +34,6 @@ const TodoList = ({
           <h2 className=" justify-self-start flex-1 flex-grow card-title">
             {title}
           </h2>
-          <button className="btn btn-sm btn-primary mr-2">
-            <Link href={`/user/${username}/list/${id}/edit`}>
-              <FaEdit />
-            </Link>
-          </button>
-          <button className="btn btn-sm btn-danger">
-            <FaTrash onClick={removeList} />
-          </button>
         </div>
         <h3 className="text-white">{description}</h3>
         <ul>

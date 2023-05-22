@@ -1,7 +1,7 @@
 import UserPage from "@/components/UserPage";
 
 const UserIdPage = async () => {
-    return <UserPage />
-}
+  return <UserPage />;
+};
 
 export default UserIdPage;

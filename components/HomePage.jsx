@@ -1,7 +1,7 @@
 "use client"
 
 import { getTenListsAllUsers } from "@/utils/auth";
-import TodoList from "@/components/TodoList";
+import HomeTodoList from "@/components/HomeTodoList";
 import { useEffect, useState } from "react";
 import useUser from "@/hooks/useUser";
 
@@ -11,6 +11,7 @@ const HomePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(user);
   const [userData, setUserData] = useState(null);
   const [lists, setLists] = useState([]);
+  console.log(lists.owner);
 
   useEffect(() => {
     refreshUser();
@@ -34,8 +35,8 @@ const HomePage = () => {
   }, [user]);
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-[75px]">
-        
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-[75px]">
+        {console.log(user)}
       {!isLoggedIn && !userData && lists.length === 0 && (
         <>
           <h1 className="text-8xl text-center text-warning text-shadow col-span-2 md:col-span-5"> Welcome to Cool Todo!! </h1>
@@ -43,7 +44,7 @@ const HomePage = () => {
           </>
         )}
       {lists.map((list) => (
-        <TodoList key = {list.id} id = {list.id} title = {list.title} created = {list.created} updated = {list.updated} description= {list.description} username = {list.owner}   />
+        <HomeTodoList key = {list.id} id = {list.id} title = {list.title} created = {list.created} updated = {list.updated} description= {list.description} username = {list.owner}   />
       ))}
     </div>
   );

@@ -17,7 +17,7 @@ const Navbar = () => {
   const router = usePathname();
 
   useEffect(() => {
-    refreshUser();
+    setTimeout(() => {refreshUser()}, 2000);
     setUserData(user);
     if(userData) {
       setIsLoggedIn(true);
@@ -50,11 +50,12 @@ const Navbar = () => {
         ) }
       {isLoggedIn &&
             <>
-              <NavButton link="/logout" name="Logout" />  
-
-              {userData && userData.bargeMeta && userData.bargeMeta.name &&
+            {userData && userData.bargeMeta && userData.bargeMeta.name &&
                <NavButton link={`/user/${userData.bargeMeta.name}`} name="My List" />
               }
+
+
+              <NavButton link="/logout" name="Logout" />  
             </>
       }
     </nav>

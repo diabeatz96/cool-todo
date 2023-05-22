@@ -3,62 +3,59 @@ import { useEffect, useState, useRef } from "react";
 import supabase from "utils/supabase.js";
 
 const useUser = () => {
-    const isMounted = useRef(false);
+  const isMounted = useRef(false);
 
-    const [user, setUser] = useState(undefined);    
-    const [error, setError] = useState(undefined);
+  const [user, setUser] = useState(undefined);
+  const [error, setError] = useState(undefined);
 
-    const refreshUser = async () => {
-        setError(undefined);
-        setUser(undefined);
-        getUser();
+  const refreshUser = async () => {
+    setError(undefined);
+    setUser(undefined);
+    getUser();
+  };
+
+  const getUser = async () => {
+    const currentUser = await getCurrentUser();
+
+    if (!currentUser.success) {
+      setError(currentUser.error);
+      return;
     }
 
-        const getUser = async () => {
+    if (!currentUser.data) {
+      setUser(null);
+      return;
+    }
 
-        const currentUser = await getCurrentUser();
+    setUser(currentUser.data);
+  };
 
-        if(!currentUser.success) {
-            setError(currentUser.error);
-            return;
-        }
+  useEffect(() => {
+    if (!isMounted.current) {
+      console.log(supabase);
+      const { subscription } = supabase.auth.onAuthStateChange(
+        authStateChangeListener
+      );
+      getUser();
+      isMounted.current = true;
+      return () => {
+        subscription?.unsubscribe();
+      };
+    }
+  }, []);
 
-        if(!currentUser.data) {
-            setUser(null);
-            return;
-        }
+  const authStateChangeListener = (event, session) => {
+    if (["SIGNED_IN", "SIGNED_OUT"].includes(event)) {
+      getUser();
+    }
+  };
 
-        setUser(currentUser.data);
-    };
-
-    useEffect(() => {
-        if(!isMounted.current) {
-        console.log(supabase);
-        const { subscription } = supabase.auth.onAuthStateChange(
-            authStateChangeListener
-        );
-        getUser();
-        isMounted.current = true;
-        return () => {
-            subscription?.unsubscribe();
-            }
-        }
-    }, []);
-
-    const authStateChangeListener = ((event, session) => {
-        if(["SIGNED_IN", "SIGNED_OUT"].includes(event)) {
-            getUser();
-        }
-    })
-
-    
-
-    return {
-        user,
-        error,
-        refreshUser,
-        loading: user === undefined,
-    };
+  return {
+    user,
+    error,
+    refreshUser,
+    loading: user === undefined,
+  };
 };
 
 export default useUser;

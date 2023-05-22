@@ -8,7 +8,6 @@ import React, { useReducer } from "react";
 const Login = () => {
   const router = useRouter();
 
-
   function reducer(state, action) {
     switch (action.type) {
       case "email":
@@ -51,12 +50,13 @@ const Login = () => {
     if (response?.success) {
       setTimeout(() => {
         router.push("/");
+        location.reload();
       }, 3000);
     }
   };
 
   return (
-    <section className="card w-96 bg-.login-bg bg-cover bg-no-repeat shadow-xl text-slate-900">
+    <section className="mt-[150px] card w-96 bg-.login-bg bg-cover bg-no-repeat shadow-xl text-slate-900">
       {response && (
         <div
           className={`${
@@ -68,9 +68,8 @@ const Login = () => {
           <span className="font-bold">
             {response.success
               ? `Success ${response.message ? `: ` : ``}`
-              : "Failure: "}
+              : `Failure: ${response.error.message}`}
           </span>
-          {response.message}
         </div>
       )}
       <div className="card-body">

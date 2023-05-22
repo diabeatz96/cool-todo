@@ -17,10 +17,11 @@ const Logout = () => {
       setTimeout(() => router.replace("/"), error ? 4000 : 2000);
     };
     innerLogout();
+    router.push("/login");
   }, []);
 
   return (
-    <div className="barge my-10">
+    <div className="barge my-10 mt-[150px] text-white">
       <p>Logging out, please wait...</p>
       {error && <p style={{ color: "#C20000" }}>Error: {error}</p>}
     </div>
