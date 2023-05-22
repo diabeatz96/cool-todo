@@ -207,6 +207,7 @@ const getTenListsAllUsers = async () => {
   const { data, error } = await supabase
   .from("lists")
   .select("*")
+  .order("id", { ascending: false })
   .limit(10);
   if(error) {
     return {
