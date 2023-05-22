@@ -1,7 +1,5 @@
 "use client"
-import { useState } from 'react'
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
 const TodoList = ({

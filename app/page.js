@@ -7,7 +7,7 @@ export default function Home() {
 
   return (
     <main className="p-24 ">
-      <h1 className="text-6xl text-shadow font-bold text-center text-warning ">Cool Todo's</h1>
+      <h1 className="text-6xl text-shadow font-bold text-center text-warning "> Cool Todo </h1>
       <div className= "flex place-content-center ">
         <HomePage />
       </div>
