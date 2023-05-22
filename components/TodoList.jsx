@@ -1,11 +1,8 @@
-"use client";
-import useUser from "@/hooks/useUser";
-import useUserMustBeLogged from "@/hooks/userIsLoggedIn";
-import { deleteList } from "@/utils/auth";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { FaEdit, FaTrash } from "react-icons/fa";
-import { useRouter } from "next/navigation";
+"use client"
+import { useState } from 'react'
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 const TodoList = ({
   id = 0,
@@ -80,7 +77,7 @@ const TodoList = ({
         <div className="card-actions text-sm">
           <p className=" badge badge-primary">Created: {created}</p>
           <p className=" badge badge-secondary">Updated: {updated}</p>
-          <p className=" badge badge-accent">Posted by: {username} </p>
+          <p className=" badge badge-accent h-fit ">Posted by: {username} </p>
         </div>
       </div>
     </section>

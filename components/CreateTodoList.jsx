@@ -77,85 +77,56 @@ const CreateTodoList = () => {
     }, 2000);
   };
 
-  return (
-    <section className="card w-96 bg-success shadow-xl text-slate-900">
-      {valid === true && (
+    return (
+        <section className = "card w-96 bg-success shadow-xl text-slate-900">
+        {valid === true && (
         <div className="bg-green-200 broder-2 border-green-800 text-green-800 py-2 px-5 my-10 text-center">
           <span className="font-bold">"Successfully Created List"</span>
         </div>
-      )}
-      <div className="card-body">
-        <h2 className="card-title">Create a todo-list</h2>
-        <form className="form">
-          <div className="form-control w-full max-w-xs">
-            <label htmlFor="title" className="label">
-              <span className="label-text text-black">
-                What is title of your todo?
-              </span>
-            </label>
-            <input
-              onChange={onChangeTitleHandler}
-              type="text"
-              placeholder="Example Title"
-              name="title"
-              className=" text-white input input-primary input-bordered w-full max-w-xs"
-            />
-            {valid === false && (
+            )}
+            <div className="card-body">
+            <h2 className="card-title">Create a todo-list</h2>
+                <form className="form">
+                    <div className="form-control w-full max-w-xs">
+                        <label htmlFor="title" className="label">
+                            <span className="label-text text-black">What is title of your todo?</span>
+                        </label>
+                    <input onChange={onChangeTitleHandler} type="text" placeholder="Example Title" name="title" className=" text-white input input-primary input-bordered w-full max-w-xs" />
+                    {valid === false && (
               <span className="label-text text-red-500">
                 Add a title for this todo
               </span>
             )}
-          </div>
-          <label htmlFor="description" className="label">
-            <span className="label-text text-black">
-              What is the description?
-            </span>
-          </label>
-          <input
-            onChange={onChangeDescriptionHandler}
-            type="text"
-            placeholder="Description"
-            name="description"
-            className="text-white input input-bordered input-lg w-full max-w-xs"
-          />
-          {todoAmount > 0 && (
-            <p className="text-white">You have {todoAmount} todos</p>
-          )}
-          <div className="card-actions justify-end pt-3">
-            {todoList.map((todo) => {
-              return (
-                <div
-                  key={todo.todo}
-                  className={`alert shadow-lg ${
-                    todo.checkbox ? "alert-info" : "alert-error"
-                  } text-white max-w-xs`}
-                >
-                  <div>
-                    <h2 className="">{todo.todo}</h2>
-                  </div>
-                </div>
-              );
-            })}
-            <div>
-              <label htmlFor="todo" className="label">
-                <span className="label-text text-black">What is the todo?</span>
-              </label>
-              <div className="input-group max-w-xs">
-                <input
-                  onChange={onChangeTodoHandler}
-                  type="text"
-                  placeholder="Todo"
-                  name="todo"
-                  className="text-white input input-bordered"
-                />
-                <input
-                  onChange={onChangeCheckboxHandler}
-                  type="checkbox"
-                  name="checkbox"
-                  className=" btn bg-white btn-square checkbox checkbox-accent"
-                />
-              </div>
-            </div>
+                    </div>
+                    <label htmlFor="description" className="label">
+                            <span className="label-text text-black">What is the description?</span>
+                    </label>
+                    <input onChange={onChangeDescriptionHandler} type="text" placeholder="Description" name="description" className="text-white input input-bordered input-lg w-full max-w-xs" />
+                    {todoAmount > 0 && <p className="text-white">You have {todoAmount} todos</p>}
+                        <div className="card-actions justify-end pt-3">
+
+
+
+                        {todoList.map((todo) => {
+                            return (
+                                <div key={ todo.todo } className= {`alert shadow-lg ${todo.checkbox ? "alert-info" : "alert-error"} text-white max-w-xs`}>
+                    
+                                    <div>
+                                        <h2 className="">{todo.todo}</h2>
+                                    </div>
+                                </div>
+                            )
+                        }
+                        )}
+                        <div>
+                            <label htmlFor="todo" className="label">
+                                <span className="label-text text-black">What is the todo?</span>
+                            </label>
+                            <div className="input-group max-w-xs">
+                                <input onChange={onChangeTodoHandler}  type="text" placeholder="Todo" name="todo" className="text-white input input-bordered" />
+                                <input onChange={onChangeCheckboxHandler}  type="checkbox" name = "checkbox" className=" btn bg-white btn-square checkbox checkbox-accent" />    
+                            </div>
+                        </div>
 
             <div
               onClick={todoListHandler}
